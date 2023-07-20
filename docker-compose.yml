@@ -11,6 +11,7 @@ services:
 
     ports:
       - 15900:5900
+      - 4723:4723
     volumes:
       - /dev/kvm:/dev/kvm
     privileged: true
