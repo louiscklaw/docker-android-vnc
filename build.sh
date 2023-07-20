@@ -2,6 +2,9 @@
 
 set -x
 
+ANDROID_API_LEVEL=25
+SCREEN_RESOLUTION=1920x1080
+
 docker rmi openbox-android
 
 set -ex
@@ -21,23 +24,28 @@ cd -
     docker build . -t openbox-android
   cd -
 
-  # build android emulator
-  cd dockerfiles/android
-    docker build . -t openbox-android
-  cd -
-
   cd dockerfiles/noVNC
     docker build . -t openbox-android
   cd -
 
+  # build android emulator
+  cd dockerfiles/android
+    docker build . \
+      --build-arg="ANDROID_API_LEVEL=$ANDROID_API_LEVEL" \
+      --build-arg="SCREEN_RESOLUTION=$SCREEN_RESOLUTION" \
+      -t openbox-android
+  cd -
+
 # finialize docker
 cd dockerfiles/final
-  docker build . -t openbox-android
+  docker build . \
+    --build-arg="ANDROID_API_LEVEL=$ANDROID_API_LEVEL" \
+    -t openbox-android
 cd -
 
 docker image tag openbox-android 192.168.10.61:5000/logickee/openbox-android
-# docker push 192.168.10.61:5000/logickee/openbox-android &
 
+# docker push 192.168.10.61:5000/logickee/openbox-android 
 docker run --rm -it \
   --privileged \
   --device /dev/kvm \

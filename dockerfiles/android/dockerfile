@@ -1,5 +1,8 @@
 FROM openbox-android
 
+ARG ANDROID_API_LEVEL=25
+ENV ANDROID_API_LEVEL ${ANDROID_API_LEVEL}
+
 # NOTE: setup emulator
 # ANDROID SDK root
 # pre-request
@@ -29,15 +32,20 @@ ENV PATH $PATH:$ANDROID_HOME/platform-tools
 ENV PATH $PATH:$ANDROID_HOME/cmdline-tools/bin
 
 # # NOTE: build-tools for apksigner.apk
-RUN yes | sdkmanager --verbose --sdk_root=$ANDROID_HOME --licenses
-RUN yes | sdkmanager --verbose --sdk_root=$ANDROID_HOME "build-tools;25.0.0"
-RUN yes | sdkmanager --verbose --sdk_root=$ANDROID_HOME "system-images;android-25;default;x86"
-RUN yes | sdkmanager --verbose --sdk_root=$ANDROID_HOME "platforms;android-25"
-
+# https://apilevels.com/
 # # # create AVD
-RUN echo no | avdmanager -v create avd -f -n test_nexus -k 'system-images;android-25;default;x86' 
+ARG ANDROID_API_LEVEL=25
+RUN yes | sdkmanager --verbose --sdk_root=$ANDROID_HOME --licenses
+RUN yes | sdkmanager --verbose --sdk_root=$ANDROID_HOME "build-tools;${ANDROID_API_LEVEL}.0.0"
+RUN yes | sdkmanager --verbose --sdk_root=$ANDROID_HOME "system-images;android-${ANDROID_API_LEVEL};default;x86"
+RUN yes | sdkmanager --verbose --sdk_root=$ANDROID_HOME "platforms;android-${ANDROID_API_LEVEL}"
+
+# NOTE: create device
+RUN echo no | avdmanager -v create avd -f \
+  -n test_nexus \
+  -k "system-images;android-${ANDROID_API_LEVEL};default;x86" 
 
 # # apksigner.jar
-ENV PATH $PATH:$ANDROID_HOME/build-tools/25.0.0/lib
+ENV PATH $PATH:$ANDROID_HOME/build-tools/${ANDROID_API_LEVEL}.0.0/lib
 
 # emulator setup ends here
