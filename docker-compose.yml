@@ -10,7 +10,8 @@ services:
     image: 192.168.10.61:5000/logickee/openbox-android
 
     ports:
-      - 15900:5900
+      - 5900:5900
+      - 6080:6080
       - 4723:4723
     volumes:
       - /dev/kvm:/dev/kvm

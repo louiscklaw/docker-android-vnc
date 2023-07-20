@@ -11,12 +11,15 @@ ENV PASSWORD="root"
 
 RUN apt install -y \
   supervisor \
-  openbox tint2 tigervnc-standalone-server \
-  pcmanfm xfce4-terminal procps curl telnet iproute2
+  openbox tint2 \
+  pcmanfm xfce4-terminal procps curl telnet iproute2 
 
+# NOTE: vnc setup start
+RUN apt install -qy tigervnc-standalone-server
 RUN mkdir /root/.vnc
 RUN echo 123456 | vncpasswd -f > /root/.vnc/passwd
 RUN chmod 600 /root/.vnc/passwd
+# NOTE: vnc setup done
 
 ADD etc/xdg/pcmanfm /root/.config/pcmanfm
 ADD etc /etc
