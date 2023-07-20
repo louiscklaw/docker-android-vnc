@@ -1,0 +1,47 @@
+FROM openbox-android
+
+RUN curl -sL https://deb.nodesource.com/setup_18.x -o /tmp/nodesource_setup.sh
+RUN chmod +x /tmp/nodesource_setup.sh
+RUN /tmp/nodesource_setup.sh
+
+# ## Run `sudo apt-get install -y nodejs` to install Node.js 16.x and npm
+# ## You may also need development tools to build native addons:
+#      sudo apt-get install gcc g++ make
+# ## To install the Yarn package manager, run:
+#      curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+#      echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+#      sudo apt-get update && sudo apt-get install yarn
+
+RUN apt install -y nodejs yarn gcc g++ make
+
+# NOTE: troubleshoot appium-doctor
+# JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+# NOTE: handled in android build step
+# ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+RUN npm i --location=global appium appium-doctor
+
+# - automationName: UiAutomator2
+# - platformNames: ["Android"]
+RUN appium driver install uiautomator2
+
+# TODO: resume me
+# # ? ffmpeg cannot be found
+# RUN apt-get -qqy install --no-install-recommends \
+#     ffmpeg
+
+# # https://www.npmjs.com/package/opencv4nodejs
+# ENV OPENCV4NODEJS_AUTOBUILD_FLAGS -DBUILD_LIST=core,imgproc,imgcodecs,videoio,highgui,video,calib3d,features2d,objdetect,dnn,ml,flann,photo,stitching,gapi
+# # RUN npm i -g opencv-build opencv4nodejs
+
+# # mjpeg-consumer cannot be found.
+# RUN npm i -g mjpeg-consumer
+
+# # ? gst-launch-1.0 and gst-inspect-1.0 are used to stream the screen of the device under test
+# RUN apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-bad1.0-dev gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-tools gstreamer1.0-x gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
+
+# # https://github.com/google/bundletool/releases/download/1.15.2/bundletool-all-1.15.2.jar
+# RUN mkdir -p $ANDROID_HOME/bundle-tool 
+# RUN wget -O $ANDROID_HOME/bundle-tool/bundletool.jar https://github.com/google/bundletool/releases/download/1.15.2/bundletool-all-1.15.2.jar
+# RUN chmod +x $ANDROID_HOME/bundle-tool/bundletool.jar
+# ENV PATH "$PATH:$ANDROID_HOME/bundle-tool"

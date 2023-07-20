@@ -1,0 +1,10 @@
+services:
+  openbox-android:
+    # build: .
+    build: openbox-android
+    ports:
+      - 15900:5900
+    volumes:
+      - /dev/kvm:/dev/kvm
+    privileged: true
+    

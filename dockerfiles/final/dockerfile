@@ -1,0 +1,19 @@
+FROM openbox-android
+
+# TODO: resume me
+# RUN apt upgrade -y
+
+ADD ./etc/supervisord-appium.conf /etc/supervisord-appium.conf
+ADD ./etc/launch_appium.sh /etc/launch_appium.sh
+
+ADD ./etc/supervisord-screen.conf /etc/supervisord-screen.conf
+
+ADD ./etc/supervisord-emulator.conf /etc/supervisord-emulator.conf
+ADD ./etc/launch_emulator.sh /etc/launch_emulator.sh
+
+ADD ./etc/run.sh /etc/run.sh
+RUN chmod +x /etc/run.sh
+
+WORKDIR /root
+
+CMD ["/etc/run.sh"]
