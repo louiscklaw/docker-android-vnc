@@ -1,4 +1,38 @@
 services:
+  api_29:
+    # image: 192.168.10.61:5000/logickee/openbox-android
+    build: 
+      context: dockerfiles/android
+      args:
+        ANDROID_API_LEVEL: 29
+        SCREEN_RESOLUTION: 1920x1080
+    deploy:
+      replicas: 10
+    ports:
+      - 5920-5929:5900
+      - 6100-6109:6080
+      - 47250-47259:4723
+    volumes:
+      - /dev/kvm:/dev/kvm
+    privileged: true
+
+  api_28:
+    # image: 192.168.10.61:5000/logickee/openbox-android
+    build: 
+      context: dockerfiles/android
+      args:
+        ANDROID_API_LEVEL: 28
+        SCREEN_RESOLUTION: 1920x1080
+    deploy:
+      replicas: 10
+    ports:
+      - 5910-5919:5900
+      - 6090-6099:6080
+      - 47240-47249:4723
+    volumes:
+      - /dev/kvm:/dev/kvm
+    privileged: true
+
   api_26:
     # image: 192.168.10.61:5000/logickee/openbox-android
     build: 
@@ -6,27 +40,28 @@ services:
       args:
         ANDROID_API_LEVEL: 26
         SCREEN_RESOLUTION: 1920x1080
-
+    deploy:
+      replicas: 10
     ports:
-      - 5901:5900
-      - 6081:6080
-      - 47231:4723
+      - 5900-5909:5900
+      - 6080-6089:6080
+      - 47230-47239:4723
     volumes:
       - /dev/kvm:/dev/kvm
     privileged: true
 
-  api_25:
-    # image: 192.168.10.61:5000/logickee/openbox-android
-    build: 
-      context: dockerfiles/android
-      args:
-        ANDROID_API_LEVEL: 25
-        SCREEN_RESOLUTION: 1920x1080
+  # api_25:
+  #   # image: 192.168.10.61:5000/logickee/openbox-android
+  #   build: 
+  #     context: dockerfiles/android
+  #     args:
+  #       ANDROID_API_LEVEL: 25
+  #       SCREEN_RESOLUTION: 1920x1080
 
-    ports:
-      - 5900:5900
-      - 6080:6080
-      - 4723:4723
-    volumes:
-      - /dev/kvm:/dev/kvm
-    privileged: true
+  #   ports:
+  #     - 5900:5900
+  #     - 6080:6080
+  #     - 4723:4723
+  #   volumes:
+  #     - /dev/kvm:/dev/kvm
+  #   privileged: true
