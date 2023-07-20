@@ -1,8 +1,10 @@
 services:
   openbox-android:
     # build: .
-    # build: 
+    # build: logickee/openbox-android
+    # NOTE: internal docker registry
     image: 192.168.10.61:5000/logickee/openbox-android
+
     ports:
       - 15900:5900
     volumes:
