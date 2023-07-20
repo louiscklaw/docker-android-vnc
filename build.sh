@@ -2,7 +2,7 @@
 
 set -x
 
-ANDROID_API_LEVEL=25
+ANDROID_API_LEVEL=26
 SCREEN_RESOLUTION=1920x1080
 
 docker rmi openbox-android
@@ -30,10 +30,17 @@ cd -
 
   # build android emulator
   cd dockerfiles/android
+    docker build -f dockerfile.base . \
+      --build-arg="ANDROID_API_LEVEL=$ANDROID_API_LEVEL" \
+      --build-arg="SCREEN_RESOLUTION=$SCREEN_RESOLUTION" \
+      -t openbox-android
+
     docker build . \
       --build-arg="ANDROID_API_LEVEL=$ANDROID_API_LEVEL" \
       --build-arg="SCREEN_RESOLUTION=$SCREEN_RESOLUTION" \
       -t openbox-android
+
+
   cd -
 
 # finialize docker
