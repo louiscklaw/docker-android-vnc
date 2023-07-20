@@ -1,6 +1,0 @@
-services:
-  openbox-android:
-    # image: 192.168.10.61:5000/logickee/openbox-android
-    args:
-      API_LEVEL: 26
-      SCREEN_RESOLUTION: 1920x1080

@@ -1,13 +1,27 @@
 services:
-  openbox-android:
-    # NOTE: build locally
-    # build: .
+  api_26:
+    # image: 192.168.10.61:5000/logickee/openbox-android
+    build: 
+      context: dockerfiles/android
+      args:
+        ANDROID_API_LEVEL: 26
+        SCREEN_RESOLUTION: 1920x1080
 
-    # NOTE: docker hub
-    # build: logickee/openbox-android
+    ports:
+      - 5901:5900
+      - 6081:6080
+      - 47231:4723
+    volumes:
+      - /dev/kvm:/dev/kvm
+    privileged: true
 
-    # NOTE: internal docker registry
-    image: 192.168.10.61:5000/logickee/openbox-android
+  api_25:
+    # image: 192.168.10.61:5000/logickee/openbox-android
+    build: 
+      context: dockerfiles/android
+      args:
+        ANDROID_API_LEVEL: 25
+        SCREEN_RESOLUTION: 1920x1080
 
     ports:
       - 5900:5900
@@ -16,4 +30,3 @@ services:
     volumes:
       - /dev/kvm:/dev/kvm
     privileged: true
-    

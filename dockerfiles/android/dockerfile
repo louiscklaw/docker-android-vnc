@@ -20,4 +20,7 @@ RUN echo no | avdmanager -v create avd -f \
 # # apksigner.jar
 ENV PATH $PATH:$ANDROID_HOME/build-tools/${ANDROID_API_LEVEL}.0.0/lib
 
+ADD ./etc/supervisord-emulator.conf /etc/supervisord-emulator.conf
+ADD ./etc/launch_emulator.sh /etc/launch_emulator.sh
+
 # emulator setup ends here
