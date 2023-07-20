@@ -1,7 +1,11 @@
 services:
   openbox-android:
+    # NOTE: build locally
     # build: .
+
+    # NOTE: docker hub
     # build: logickee/openbox-android
+
     # NOTE: internal docker registry
     image: 192.168.10.61:5000/logickee/openbox-android
 
